@@ -5,8 +5,8 @@ const filterInitialState = {
 };
 
 const filterSlice = createSlice({
-  name: 'filter',
-  initialState: filterInitialState.filter,
+  name: 'filters',
+  initialState: filterInitialState, // initial state has to be an Object hence filterInitialState.filter cannot be used here
   reducers: {
     setFilter(state, action) {
       state.filter = action.payload;

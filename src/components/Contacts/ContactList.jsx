@@ -1,4 +1,4 @@
-import { useSelector} from 'react-redux';
+import { useSelector } from 'react-redux';
 // import { useDispatch } from 'react-redux';
 import css from './ContactList.module.css';
 import PropTypes from 'prop-types';
@@ -6,17 +6,18 @@ import { getContacts, getFilter } from 'redux/selectors';
 
 const ContactList = ({ remove }) => {
   const contacts = useSelector(getContacts);
-  const filter = useSelector(getFilter);
+  const filterValue = useSelector(getFilter);
   // const dispatch = useDispatch();
 
   //create filtered array
-  const filteredContacts = contacts.filter(contact =>
-    contact.name.toLowerCase().includes(filter.toLowerCase())
-  );
+  const filteredContacts = contacts.filter(contact => {
+    return (
+      contact.name.toLowerCase().includes(filterValue.filter.toLowerCase()) ||
+      contact.phone.includes(filterValue.filter)
+    );
+  });
 
-  console.log(filteredContacts);
-
-  const liItems = contacts.map(item => {
+  const liItems = filteredContacts.map(item => {
     return (
       <li key={item.id} id={item.id} className={css.contactListItem}>
         {item.name}: {item.phone}
