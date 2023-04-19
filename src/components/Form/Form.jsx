@@ -3,30 +3,15 @@ import { toast } from 'react-toastify';
 import css from './Form.module.css';
 import PropTypes from 'prop-types';
 
+import { useDispatch, useSelector } from 'react-redux';
+import { addContact } from 'redux/contactSlicer';
+import { getContacts } from 'redux/selectors';
+
 import 'react-toastify/dist/ReactToastify.css';
-import { useState } from 'react';
 
-const ContactForm = ({ contacts, addContact }) => {
-  //put initial values to state
-  const [name, setName] = useState('');
-  const [number, setNumber] = useState('');
-
-  //change of state based on onChange event from input
-  const handleChange = e => {
-    const { name, value } = e.target;
-    if (name === 'name') {
-      setName(value);
-    } else if (name === 'number') {
-      setNumber(value);
-    }
-  };
-
-  //clear form function
-  const reset = () => {
-    setName('');
-    setNumber('');
-  };
-
+const ContactForm = () => {
+  const dispatch = useDispatch();
+  const contacts = useSelector(getContacts);
   //on form Submit function
   const handleSubmit = e => {
     //prevent default form behaviour
@@ -35,8 +20,8 @@ const ContactForm = ({ contacts, addContact }) => {
     //create new contact object from input based onChange event and values from setState
     const newContact = {
       id: uuidv4(),
-      name,
-      number,
+      name: e.target[0].value,
+      number: e.target[1].value,
     };
 
     //check if contact exist in data
@@ -50,7 +35,7 @@ const ContactForm = ({ contacts, addContact }) => {
     });
 
     if (!isContact) {
-      addContact(newContact);
+      dispatch(addContact(newContact));
     } else {
       toast.warn('You cannot add the same name twice!', {
         position: 'top-right',
@@ -65,7 +50,8 @@ const ContactForm = ({ contacts, addContact }) => {
     }
 
     //clear form
-    reset();
+    const form = e.currentTarget;
+    form.reset()
   };
 
   //creating DOM elements
@@ -77,8 +63,6 @@ const ContactForm = ({ contacts, addContact }) => {
           Name
           <input
             className={css.formInput}
-            value={name}
-            onChange={handleChange}
             id="name"
             type="text"
             name="name"
@@ -91,8 +75,6 @@ const ContactForm = ({ contacts, addContact }) => {
           Number
           <input
             className={css.formInput}
-            value={number}
-            onChange={handleChange}
             type="tel"
             id="number"
             name="number"
@@ -110,7 +92,6 @@ const ContactForm = ({ contacts, addContact }) => {
 };
 
 ContactForm.propTypes = {
-  handleChange: PropTypes.func,
   number: PropTypes.string,
   name: PropTypes.string,
 };

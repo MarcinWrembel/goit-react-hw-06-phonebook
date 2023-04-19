@@ -4,6 +4,7 @@ import ContactList from './Contacts/ContactList';
 import Filter from './Filter/Filter';
 import Section from './Section/Section';
 
+
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -39,11 +40,7 @@ const App = () => {
     // console.log(this.state.filter);
   };
 
-  const filteredNames = () => {
-    return contacts.filter(el =>
-      el.name.toLowerCase().includes(filter.toLowerCase())
-    );
-  };
+
 
   const deleteContact = id => {
     // console.log(id);
@@ -67,7 +64,7 @@ const App = () => {
       </Section>
       <Section title="Contacts">
         <Filter filterState={filterName} />
-        <ContactList contactsFiltered={filteredNames()} remove={deleteContact} />
+        <ContactList  remove={deleteContact} />
         <ToastContainer />
       </Section>
     </>

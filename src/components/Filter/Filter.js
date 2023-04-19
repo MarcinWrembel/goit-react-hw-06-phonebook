@@ -1,7 +1,16 @@
+import { useDispatch } from 'react-redux';
+import { setFilter } from 'redux/filterSlicer';
 import css from './Filter.module.css';
 import PropTypes from 'prop-types';
 
-const Filter = ({ filterState }) => {
+const Filter = () => {
+  const dispatch = useDispatch();
+
+  const handleFilterChange = e => {
+    const value = e.target.value;
+    dispatch(setFilter(value));
+  };
+
   return (
     <label htmlFor="filter" className={css.filterLabel}>
       Filter contacts by name
@@ -10,14 +19,14 @@ const Filter = ({ filterState }) => {
         type="search"
         name="q"
         id="filter"
-        onChange={filterState}
+        onChange={handleFilterChange}
       ></input>
     </label>
   );
 };
 
 Filter.propTypes = {
-  filterState: PropTypes.func,
+  handleFilterChange: PropTypes.func,
 };
 
 export default Filter;

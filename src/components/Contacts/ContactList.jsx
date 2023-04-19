@@ -1,23 +1,33 @@
-
+import { useSelector, useDispatch } from 'react-redux';
 import css from './ContactList.module.css';
 import PropTypes from 'prop-types';
+import { getContacts, getFilter } from 'redux/selectors';
 
-const ContactList = ({ contactsFiltered, remove })=> {
+const ContactList = ({ remove }) => {
+  const contacts = useSelector(getContacts);
+  const filter = useSelector(getFilter);
+  const dispatch = useDispatch();
 
-    const liItems = contactsFiltered.map(item => {
-      return (
-        <li key={item.id} id={item.id} className={css.contactListItem}>
-          {item.name}: {item.number}
-          <button onClick={() => remove(item.id)} className={css.btnDelete}>
-            Delete
-          </button>
-        </li>
-      );
-    });
+  //create filtered array
+  const filteredContacts = contacts.filter(contact =>
+    contact.name.toLowerCase().includes(filter.toLowerCase())
+  );
 
-    return <ul className={css.contactList}>{liItems}</ul>;
+  console.log(filteredContacts);
 
-}
+  const liItems = contacts.map(item => {
+    return (
+      <li key={item.id} id={item.id} className={css.contactListItem}>
+        {item.name}: {item.phone}
+        <button onClick={() => remove(item.id)} className={css.btnDelete}>
+          Delete
+        </button>
+      </li>
+    );
+  });
+
+  return <ul className={css.contactList}>{liItems}</ul>;
+};
 
 ContactList.propTypes = {
   liItems: PropTypes.array,
