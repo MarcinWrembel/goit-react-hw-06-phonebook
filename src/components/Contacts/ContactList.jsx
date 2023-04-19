@@ -1,4 +1,5 @@
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector} from 'react-redux';
+// import { useDispatch } from 'react-redux';
 import css from './ContactList.module.css';
 import PropTypes from 'prop-types';
 import { getContacts, getFilter } from 'redux/selectors';
@@ -6,7 +7,7 @@ import { getContacts, getFilter } from 'redux/selectors';
 const ContactList = ({ remove }) => {
   const contacts = useSelector(getContacts);
   const filter = useSelector(getFilter);
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
   //create filtered array
   const filteredContacts = contacts.filter(contact =>

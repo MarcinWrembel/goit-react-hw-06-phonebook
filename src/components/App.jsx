@@ -12,7 +12,7 @@ const App = () => {
   const NEW_CONTACT = 'new-contact';
 
   const [contacts, setContacts] = useState([]);
-  const [filter, setFilter] = useState('');
+  // const [filter, setFilter] = useState('');
 
   //action on application loading
   useEffect(() => {
@@ -36,7 +36,7 @@ const App = () => {
   };
 
   const filterName = e => {
-    setFilter(e.currentTarget.value);
+    // setFilter(e.currentTarget.value);
     // console.log(this.state.filter);
   };
 
