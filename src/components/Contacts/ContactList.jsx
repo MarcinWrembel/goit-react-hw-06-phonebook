@@ -5,14 +5,11 @@ import PropTypes from 'prop-types';
 import { getContacts, getFilter } from 'redux/selectors';
 import { deleteContact } from 'redux/contactSlicer';
 
-const ContactList = ({ lsContacts }) => {
+const ContactList = ({ lskey }) => {
   // const contacts = useSelector(getContacts);
   const stateContacts = useSelector(getContacts);
   const filterValue = useSelector(getFilter);
   const dispatch = useDispatch();
-
-  console.log({ stateContacts });
-  console.log({ lsContacts });
 
   //create filtered array
   const filteredContacts = stateContacts.filter(contact => {

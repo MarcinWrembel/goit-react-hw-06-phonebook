@@ -7,42 +7,30 @@ import Section from './Section/Section';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { getContacts } from 'redux/selectors';
-import { useSelector } from 'react-redux';
-import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { loadContacts } from 'redux/contactSlicer';
 
 const App = () => {
   const NEW_CONTACT = 'new-contact';
 
-  const [lsContacts, setLsContacts] = useState([]);
   const contacts = useSelector(getContacts);
+  const dispatch = useDispatch();
 
+   useEffect(() => {
 
-  useEffect(() => {
-    console.log('render0');
-    //set state for data from local storage on mount
-    const localContacts = localStorage.getItem(NEW_CONTACT);
-    if (localContacts.length > 0) {
-      setLsContacts(JSON.parse(localContacts));
-      // dispatch(addContact(lsContacts))
-    }
-  }, []);
+      localStorage.setItem(NEW_CONTACT, JSON.stringify(contacts));
 
-  //saving data to localStorage by every state change
+      if (contacts.length === 0) {localStorage.removeItem(NEW_CONTACT)}
 
-
-  useEffect(() => {
-    const lsContacts = localStorage.getItem(NEW_CONTACT);
-    if (lsContacts !== null) {
-      setLsContacts(JSON.parse(lsContacts));
-    } else if (contacts.length === 0) {
-      console.log({contacts});
-      setLsContacts([]);
-    } else {
-      setLsContacts(contacts);
-    }
   }, [contacts]);
 
-
+  useEffect(() => {
+    const localContacts = JSON.parse(localStorage.getItem(NEW_CONTACT));
+    if (localContacts) {
+      console.log(localContacts);
+      dispatch(loadContacts(localContacts));
+    }
+  }, [dispatch]);
 
   return (
     <>
@@ -51,7 +39,7 @@ const App = () => {
       </Section>
       <Section title="Contacts">
         <Filter />
-        <ContactList lsContacts={lsContacts} />
+        <ContactList lsKey={NEW_CONTACT} />
         <ToastContainer />
       </Section>
     </>

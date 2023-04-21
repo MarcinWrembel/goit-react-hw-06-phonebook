@@ -26,11 +26,14 @@ export const contactsSlice = createSlice({
       const index = state.findIndex(task => task.id === action.payload);
       state.splice(index, 1);
     },
+    loadContacts(state, action) {
+      state.splice(0, state.length, ...action.payload);
+    },
   },
 });
 
 // Generatory akcji
-export const { addContact, deleteContact } =
+export const { addContact, deleteContact, loadContacts } =
   contactsSlice.actions;
 // Reducer slice'u
 export const contactsReducer = contactsSlice.reducer;
