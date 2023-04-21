@@ -16,18 +16,18 @@ const App = () => {
   const contacts = useSelector(getContacts);
   const dispatch = useDispatch();
 
-   useEffect(() => {
-
-      localStorage.setItem(NEW_CONTACT, JSON.stringify(contacts));
-
-      if (contacts.length === 0) {localStorage.removeItem(NEW_CONTACT)}
-
+  useEffect(() => {
+    localStorage.setItem(NEW_CONTACT, JSON.stringify(contacts));
+    const localContacts = JSON.parse(localStorage.getItem(NEW_CONTACT));
+    
+    if (!localContacts || localContacts.length === 0) {
+      localStorage.removeItem(NEW_CONTACT);
+    }
   }, [contacts]);
 
   useEffect(() => {
     const localContacts = JSON.parse(localStorage.getItem(NEW_CONTACT));
     if (localContacts) {
-      console.log(localContacts);
       dispatch(loadContacts(localContacts));
     }
   }, [dispatch]);

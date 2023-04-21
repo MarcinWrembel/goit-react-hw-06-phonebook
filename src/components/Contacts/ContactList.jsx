@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import { getContacts, getFilter } from 'redux/selectors';
 import { deleteContact } from 'redux/contactSlicer';
 
-const ContactList = ({ lskey }) => {
+const ContactList = ({ lsKey }) => {
   // const contacts = useSelector(getContacts);
   const stateContacts = useSelector(getContacts);
   const filterValue = useSelector(getFilter);
@@ -21,7 +21,7 @@ const ContactList = ({ lskey }) => {
 
   const handledDelete = id => {
     dispatch(deleteContact(id));
-  
+    localStorage.setItem(lsKey, JSON.stringify(stateContacts));
   };
 
   const liItems = filteredContacts === [] ? "" : filteredContacts.map(item => {
