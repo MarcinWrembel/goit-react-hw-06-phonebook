@@ -1,11 +1,7 @@
-import { createSlice} from '@reduxjs/toolkit';
-
+import { createSlice } from '@reduxjs/toolkit';
 
 const contactsInitialState = {
-  contacts: [
-    { id: 1 ,name: 'Janek', phone: '22222222221' },
-    { id: 2, name: 'Janek2', phone: '222211111' },
-  ],
+  contacts: [],
 };
 
 export const contactsSlice = createSlice({
@@ -18,7 +14,11 @@ export const contactsSlice = createSlice({
       },
       prepare(contact) {
         return {
-          payload: { id: contact.id, name: contact.name, phone: contact.number },
+          payload: {
+            id: contact.id,
+            name: contact.name,
+            phone: contact.number,
+          },
         };
       },
     },
@@ -30,6 +30,7 @@ export const contactsSlice = createSlice({
 });
 
 // Generatory akcji
-export const { addContact, deleteContact } = contactsSlice.actions;
+export const { addContact, deleteContact } =
+  contactsSlice.actions;
 // Reducer slice'u
 export const contactsReducer = contactsSlice.reducer;

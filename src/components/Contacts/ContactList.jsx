@@ -1,27 +1,40 @@
 import { useSelector } from 'react-redux';
-// import { useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import css from './ContactList.module.css';
 import PropTypes from 'prop-types';
 import { getContacts, getFilter } from 'redux/selectors';
+import { deleteContact } from 'redux/contactSlicer';
 
-const ContactList = ({ remove }) => {
-  const contacts = useSelector(getContacts);
+const ContactList = ({ lsContacts }) => {
+  // const contacts = useSelector(getContacts);
+  const stateContacts = useSelector(getContacts);
   const filterValue = useSelector(getFilter);
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
+
+  console.log({ stateContacts });
+  console.log({ lsContacts });
 
   //create filtered array
-  const filteredContacts = contacts.filter(contact => {
+  const filteredContacts = stateContacts.filter(contact => {
     return (
       contact.name.toLowerCase().includes(filterValue.filter.toLowerCase()) ||
       contact.phone.includes(filterValue.filter)
     );
   });
 
-  const liItems = filteredContacts.map(item => {
+  const handledDelete = id => {
+    dispatch(deleteContact(id));
+  
+  };
+
+  const liItems = filteredContacts === [] ? "" : filteredContacts.map(item => {
     return (
       <li key={item.id} id={item.id} className={css.contactListItem}>
         {item.name}: {item.phone}
-        <button onClick={() => remove(item.id)} className={css.btnDelete}>
+        <button
+          onClick={() => handledDelete(item.id)}
+          className={css.btnDelete}
+        >
           Delete
         </button>
       </li>
