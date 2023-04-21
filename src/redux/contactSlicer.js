@@ -1,7 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
 
+const localContacts = JSON.parse(localStorage.getItem('new-contact'));
+
 const contactsInitialState = {
-  contacts: [],
+  contacts: localContacts ? localContacts : [],
 };
 
 export const contactsSlice = createSlice({
