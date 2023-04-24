@@ -7,14 +7,14 @@ import Section from './Section/Section';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { getContacts } from 'redux/selectors';
-import { useDispatch, useSelector } from 'react-redux';
-import { loadContacts } from 'redux/contactSlicer';
+import { useSelector } from 'react-redux';
+// import { loadContacts } from 'redux/contactSlicer';
 
 const App = () => {
   const NEW_CONTACT = 'new-contact';
 
   const contacts = useSelector(getContacts);
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
   useEffect(() => {
     localStorage.setItem(NEW_CONTACT, JSON.stringify(contacts));
@@ -25,12 +25,12 @@ const App = () => {
     }
   }, [contacts]);
 
-  useEffect(() => {
-    const localContacts = JSON.parse(localStorage.getItem(NEW_CONTACT));
-    if (localContacts) {
-      dispatch(loadContacts(localContacts));
-    }
-  }, [dispatch]);
+  // useEffect(() => {
+  //   const localContacts = JSON.parse(localStorage.getItem(NEW_CONTACT));
+  //   if (localContacts) {
+  //     dispatch(loadContacts(localContacts));
+  //   }
+  // }, [dispatch]);
 
   return (
     <>
